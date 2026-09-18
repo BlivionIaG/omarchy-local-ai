@@ -2,20 +2,20 @@
   "schemaVersion": 1,
   "id": "sero.local-ai",
   "name": "Local AI",
-  "version": "4.0.0",
+  "version": "5.0.7",
   "author": "0xSero",
   "license": "MIT",
-  "description": "Run the model validated for your GPU as one button on the bar. Start downloads it, proves it works, and serves it; Open agent starts any coding agent on it (claude, codex, pi, opencode, crush, and more) with nothing written to your config; Share puts the same keyed endpoint on your tailnet in one click. Every detected GPU is listed and any can be picked. 34 validated recipes for NVIDIA and Intel Arc, two Docker containers only this plugin touches, and every refusal spelled out on the card.",
+  "description": "Local models on your own GPUs, from the Omarchy bar. Supports NVIDIA RTX 30, 40 and 50 series, RTX Ada and RTX Pro Blackwell, and the Intel Arc Pro B70. 67 validated recipes across 34 cards, up to 256K context. Run several models at once, each on its own GPU group. Open claude, codex, pi, omp, opencode, crush, grok, copilot or hermes on a running model, nothing written to your config. Share the same keyed endpoint on your tailnet in one click. Live speed, context and capabilities on the card.",
   "kinds": [
     "bar-widget"
   ],
   "activation": "on-demand",
   "entryPoints": {
-    "barWidget": "Panel.qml"
+    "barWidget": "ui/Panel.qml"
   },
   "barWidget": {
     "displayName": "Local AI",
-    "description": "One model for your GPU: Start, Stop, pick a card, open an agent on it, share it on your tailnet.",
+    "description": "Run validated local models on NVIDIA and Intel Arc GPUs, open coding agents on them, share on your tailnet.",
     "category": "AI",
     "aliases": [
       "local-ai",
