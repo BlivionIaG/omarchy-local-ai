@@ -457,7 +457,7 @@ jq --argjson r "$tp2" '.hardware["rx-7900-xtx-24gb-tp2"]={match:{backend:"amd-ro
 "$CLI" snapshot >/dev/null
 [[ $(snap .hardwareId) == rx-7900-xtx-24gb-tp2 && $(snap .selected.name) == "TP2 Model" ]] || fail "two amd pick tp2" "$(snap .hardwareId) $(snap .model)"; pass "two AMD cards pick the gpuCount=2 recipe"
 : >"$SHIM/docker.log"; SHIM_RUNTIMES=amd "$CLI" load
-line=$(grep omarchy-local-ai-tp2-engine "$SHIM/docker.log" | tail -1)
+line=$(grep "^docker run .*omarchy-local-ai-tp2-engine" "$SHIM/docker.log" | tail -1)
 [[ $(snap '.selected.indexes|join(",")') == "0,1" ]] || fail "amd tp2 indexes" "$(snap .selected)"
 grep -q -- "--device amd.com/gpu=0" <<<"$line" && grep -q -- "--device amd.com/gpu=1" <<<"$line" || fail "amd tp2 cdi" "$line"
 grep -q -- "--device amd.com/gpu=all" <<<"$line" && fail "amd tp2 used all gpus" "$line"; pass "TP AMD launch uses one CDI device per claimed index, not amd.com/gpu=all"
@@ -467,7 +467,7 @@ export SHIM_AMD_GPUS=3 SHIM_RUNTIMES=amd
 "$CLI" snapshot >/dev/null
 [[ $(snap '.gpus|length') == 3 && $(snap .hardwareId) == rx-7900-xtx-24gb-tp2 && $(snap '.selected.indexes|join(",")') == "0,1" ]] || fail "three amd claim two" "$(snap .hardwareId) $(snap .selected) $(snap .gpus)"
 : >"$SHIM/docker.log"; "$CLI" load
-line=$(grep omarchy-local-ai-tp2-engine "$SHIM/docker.log" | tail -1)
+line=$(grep "^docker run .*omarchy-local-ai-tp2-engine" "$SHIM/docker.log" | tail -1)
 grep -q -- "--device amd.com/gpu=0" <<<"$line" && grep -q -- "--device amd.com/gpu=1" <<<"$line" || fail "amd 3gpu claimed cdi" "$line"
 grep -q -- "--device amd.com/gpu=2" <<<"$line" && fail "third amd gpu claimed" "$line"
 grep -q -- "--device amd.com/gpu=all" <<<"$line" && fail "3gpu used all" "$line"; pass "a 2-card AMD claim on a 3-card host uses only the claimed CDI devices"
